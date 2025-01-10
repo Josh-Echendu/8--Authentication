@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--Check for errprs and display errors -->
+    {% if form.errors %}
+        <p>You have entered an incorrect username or password</p>
+    {% endif %}
+
+    <!--Prompt the user to login -->
+    {% if next %}
+        {% if not user.is_authenticated %} <!--Check if user is not authenticated-->
+            <h1>Please login in to view that page:</h1>
+        {% else %}
+            <h1>Please login</h1>
+        {% endif %}
+    {% endif %}
+
+    <!-- Display login form-->
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Login">
+        <input type="hidden" name="next" value={{next}}><!--value="{{next}}" means if i was going to the dashboard without being logged in then i would be directed to the login page and then redirect me back to the dashboard -->
+    </form>    
+</body>
+</html>
